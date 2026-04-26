@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- BASE:START (managed by Coding Agent — do not edit) -->
+<base href="/ryans-restaurant/">
+<!-- BASE:END -->
+
+  <base href="/ryans-restaurant/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+
+<!-- SEO Meta Tags -->
+<title>About Ryan's Restaurant | Southern Fine Dining in Savannah, GA</title>
+<meta name="description" content="Discover the story, team, philosophy, and awards behind Ryan's Restaurant, an elegant Southern fine dining destination in Savannah's historic district." />
+<meta property="og:title" content="About Ryan's Restaurant | Southern Fine Dining in Savannah, GA" />
+<meta property="og:description" content="Discover the story, team, philosophy, and awards behind Ryan's Restaurant, an elegant Southern fine dining destination in Savannah's historic district." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="About Ryan's Restaurant | Southern Fine Dining in Savannah, GA" />
+<meta name="twitter:description" content="Discover the story, team, philosophy, and awards behind Ryan's Restaurant, an elegant Southern fine dining destination in Savannah's historic district." />
+<!-- End SEO Meta Tags -->
+
+<script data-field-replace>
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var fields={};
+  var paramMap={
+    'first_name':'firstName','last_name':'lastName','full_name':'fullName',
+    'email':'email','phone':'phone','company':'company',
+    'city':'city','state':'state','country':'country'
+  };
+  var skipTags={'SCRIPT':1,'STYLE':1,'NOSCRIPT':1,'TEXTAREA':1,'CODE':1,'PRE':1};
+  var hasUrlFields=false;
+  for(var p in paramMap){
+    var v=params.get(p);
+    if(v){fields[paramMap[p]]=v;hasUrlFields=true;}
+  }
+  var contactId=params.get('contact_id');
+  function esc(s){
+    if(!s)return s;
+    var d=document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+  function doReplace(data){
+    var r={};
+    r['{{full_name}}']=esc(((data.firstName||'')+' '+(data.lastName||'')).trim()||((data.fullName||data.name)||''));
+    r['{{first_name}}']=esc(data.firstName||(data.name?data.name.split(' ')[0]:'')||'');
+    r['{{last_name}}']=esc(data.lastName||(data.name&&data.name.indexOf(' ')>-1?data.name.substring(data.name.indexOf(' ')+1):'')||'');
+    r['{{email}}']=esc(data.email||'');
+    r['{{phone}}']=esc(data.phone||'');
+    r['{{company}}']=esc(data.company||'');
+    r['{{city}}']=esc(data.city||'');
+    r['{{state}}']=esc(data.state||'');
+    r['{{country}}']=esc(data.country||'');
+    r['{{date}}']=new Date().toLocaleDateString();
+    r['{{time}}']=new Date().toLocaleTimeString();
+    r['{{location}}']=[data.city,data.state,data.country].filter(Boolean).join(', ');
+    r['{{tracking_id}}']=esc(data.trackingId||'');
+    r['{{lastClickedProduct}}']=esc(data.lastClickedProduct||'');
+    r['{{lastProductClickDate}}']=esc(data.lastProductClickDate||'');
+    r['{{lastClickedProductPrice}}']=esc(data.lastClickedProductPrice||'');
+    r['{{lastClickedProductURL}}']=esc(data.lastClickedProductURL||'');
+    r['{{productsClickedCount}}']=esc(data.productsClickedCount||'0');
+    r['{{ip_address}}']=esc(data.ipAddress||'');
+    r['{{ip}}']=esc(data.ipAddress||'');
+    if(data.customFields){
+      for(var k in data.customFields){
+        r['{{'+k+'}}']=esc(String(data.customFields[k]||''));
+      }
+    }
+    params.forEach(function(v,k){
+      if(!paramMap[k]&&k!=='contact_id'&&k!=='page_id'&&k.indexOf('utm_')!==0){
+        r['{{'+k+'}}']=esc(v);
+      }
+    });
+    var hasValues=false;
+    for(var key in r){if(r[key]){hasValues=true;break;}}
+    if(!hasValues)return;
+    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
+      acceptNode:function(n){
+        var p=n.parentNode;
+        if(p&&skipTags[p.nodeName])return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var node;
+    while(node=walker.nextNode()){
+      var txt=node.nodeValue;
+      if(txt&&txt.indexOf('{{')>-1){
+        var changed=txt;
+        for(var ph in r){
+          if(r[ph]&&changed.indexOf(ph)>-1){
+            changed=changed.split(ph).join(r[ph]);
+          }
+        }
+        if(changed!==txt)node.nodeValue=changed;
+      }
+    }
+    var attrs=['value','placeholder','content','alt','title'];
+    attrs.forEach(function(attr){
+      var els=document.querySelectorAll('['+attr+'*="{{"]');
+      for(var i=0;i<els.length;i++){
+        var tag=els[i].tagName;
+        if(skipTags[tag])continue;
+        var val=els[i].getAttribute(attr);
+        if(val){
+          var nv=val;
+          for(var ph in r){
+            if(r[ph]&&nv.indexOf(ph)>-1){
+              nv=nv.split(ph).join(r[ph]);
+            }
+          }
+          if(nv!==val)els[i].setAttribute(attr,nv);
+        }
+      }
+    });
+  }
+  function run(){
+    if(contactId){
+      var xhr=new XMLHttpRequest();
+      xhr.open('GET','https://paymegpt.com/api/landing/context/'+encodeURIComponent(contactId)+'?page_id=3563');
+      xhr.onload=function(){
+        if(xhr.status===200){
+          try{
+            var resp=JSON.parse(xhr.responseText);
+            if(resp.success&&resp.contact){
+              var merged=resp.contact;
+              for(var k in fields){merged[k]=fields[k];}
+              doReplace(merged);
+              return;
+            }
+          }catch(e){}
+        }
+        if(hasUrlFields)doReplace(fields);
+      };
+      xhr.onerror=function(){if(hasUrlFields)doReplace(fields);};
+      xhr.send();
+    }else if(hasUrlFields){
+      doReplace(fields);
+    }
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',run);}
+  else{run();}
+})();
+</script>
+<script data-payment>
+(function(){
+  var slug='zZr4dr6vj';
+  var apiBase='https://paymegpt.com';
+  function findEmail(){
+    var ids=['email','emailAddress','buyer-email','buyerEmail','user-email','userEmail','checkout-email','customer-email','contact-email'];
+    for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el&&el.value&&el.value.includes('@'))return el.value.trim();}
+    var inputs=document.querySelectorAll('input[type="email"],input[name*="email"],input[placeholder*="email"],input[placeholder*="Email"]');
+    for(var j=0;j<inputs.length;j++){if(inputs[j].value&&inputs[j].value.includes('@'))return inputs[j].value.trim();}
+    return '';
+  }
+  function findName(){
+    var ids=['name','fullName','full-name','buyer-name','buyerName','customer-name','userName','user-name'];
+    for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el&&el.value)return el.value.trim();}
+    var inputs=document.querySelectorAll('input[name*="name"]:not([name*="email"]):not([type="email"]),input[placeholder*="name"]:not([placeholder*="email"]):not([type="email"]),input[placeholder*="Name"]:not([type="email"])');
+    for(var j=0;j<inputs.length;j++){if(inputs[j].value)return inputs[j].value.trim();}
+    return '';
+  }
+  var __realProcessPayment=function(a,b,c,d,e){
+    var amountCents,email,productName,productDescription,customerName,quantity;
+    if(a&&typeof a==='object'){
+      amountCents=a.amountCents;email=a.email;productName=a.productName;
+      productDescription=a.productDescription||'';customerName=a.name||'';quantity=a.quantity||1;
+    }else{
+      amountCents=typeof a==='number'?a:0;productName=typeof b==='string'?b:'';
+      productDescription=typeof c==='string'?c:'';email='';customerName='';quantity=1;
+    }
+    if(!email)email=findEmail();
+    if(!customerName)customerName=findName();
+    if(!productName){alert('Product name is required.');return Promise.reject('no_product_name');}
+    if(!amountCents||amountCents<100){alert('Amount must be at least $1.00');return Promise.reject('invalid_amount');}
+    if(!email){alert('Please enter your email address.');return Promise.reject('no_email');}
+    var successBase=window.location.href.split('?')[0];
+    return fetch(apiBase+'/api/landing-pages/public/'+slug+'/payment/checkout',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,name:customerName,amountCents:amountCents,productName:productName,productDescription:productDescription,quantity:quantity,successUrl:successBase+'?payment=success&product='+encodeURIComponent(productName)+'&session_id={CHECKOUT_SESSION_ID}',cancelUrl:successBase+'?payment=cancelled'})
+    }).then(function(r){return r.json();}).then(function(d){
+      if(d.checkoutUrl){window.location.href=d.checkoutUrl;}
+      else{alert(d.error||'Failed to process payment');throw new Error(d.error);}
+    });
+  };
+  Object.defineProperty(window,'__processPayment',{value:__realProcessPayment,writable:false,configurable:false});
+  document.addEventListener('DOMContentLoaded',function(){
+    var urlParams=new URLSearchParams(window.location.search);
+    if(urlParams.get('payment')==='success'){
+      var pName=urlParams.get('product')||'your item';
+      var overlay=document.createElement('div');overlay.id='payment-success-overlay';
+      overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:999999;font-family:system-ui,-apple-system,sans-serif;';
+      overlay.innerHTML='<div style="background:white;border-radius:16px;padding:40px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.15);"><div style="width:64px;height:64px;border-radius:50%;background:#dcfce7;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><h2 style="margin:0 0 12px;font-size:24px;font-weight:700;color:#111827;">Payment Successful!</h2><p style="margin:0 0 24px;color:#6b7280;font-size:16px;">Thank you for purchasing '+pName.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'.</p><button onclick="document.getElementById(\'payment-success-overlay\').remove();window.history.replaceState({},\'\',window.location.pathname);" style="padding:12px 32px;font-size:16px;font-weight:600;background:#16a34a;color:white;border:none;border-radius:8px;cursor:pointer;">Continue</button></div>';
+      document.body.appendChild(overlay);
+    }
+  });
+})();
+</script>  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen bg-slate-950 text-amber-50 antialiased">
+  <!-- ============================================================================ -->
+  <!-- NAVIGATION: Top site navigation with brand, primary links, and mobile safety -->
+  <!-- Features: Sticky top bar, elegant contrast, responsive spacing               -->
+  <!-- Mobile Padding: p-4 ensures content never touches viewport edges            -->
+  <!-- ============================================================================ -->
+  <nav data-section="navbar" class="sticky top-0 z-50 border-b border-amber-200/10 bg-slate-950/90 backdrop-blur">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 md:px-8 lg:px-12">
+      <a href="/" class="text-lg font-semibold tracking-[0.2em] text-amber-100 uppercase">Ryan's Restaurant</a>
+      <div class="flex items-center gap-6 text-sm font-medium text-amber-100/80">
+        <a href="/" class="transition hover:text-amber-200">Home</a>
+        <a href="/menu" class="transition hover:text-amber-200">Menu</a>
+        <a href="/about" class="text-amber-200">About</a>
+        <a href="/contact" class="transition hover:text-amber-200">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <main class="page-surface">
+    <!-- ============================================================================ -->
+    <!-- HERO SECTION: Main landing area with headline, subtext, and ambient elegance -->
+    <!-- Features: Rich navy-green gradient, centered content, responsive spacing    -->
+    <!-- Mobile Padding: px-4 py-10 md:px-8 lg:px-12 keeps headline fully visible    -->
+    <!-- ============================================================================ -->
+    <section data-section="hero" class="relative overflow-hidden border-b border-amber-200/10">
+      <div class="mx-auto max-w-7xl px-4 py-16 md:px-8 md:py-24 lg:px-12">
+        <div class="max-w-3xl">
+          <p class="mb-4 text-sm tracking-[0.35em] text-amber-300 uppercase">Savannah, Georgia</p>
+          <h1 class="text-4xl font-semibold leading-tight text-cream-50 text-amber-50 sm:text-5xl lg:text-6xl">Our Story</h1>
+          <p class="mt-6 max-w-2xl text-lg leading-8 text-amber-100/85">
+            A table worth gathering around — where Southern tradition is refined with care, seasonality, and the quiet confidence of true hospitality.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- STORY SECTION: Founder narrative and restaurant origin story                -->
+    <!-- Features: Two-column layout, rich typography, historical context            -->
+    <!-- ============================================================================ -->
+    <section data-section="story" class="border-b border-amber-200/10">
+      <div class="mx-auto grid max-w-7xl gap-10 px-4 py-16 md:px-8 lg:grid-cols-5 lg:px-12 lg:py-24">
+        <div class="lg:col-span-2">
+          <p class="text-sm tracking-[0.3em] text-amber-300 uppercase">Since 2011</p>
+          <h2 class="mt-3 text-3xl font-semibold text-amber-50 sm:text-4xl">Honest, elevated Southern cooking</h2>
+        </div>
+        <div class="lg:col-span-3">
+          <p class="text-base leading-8 text-amber-100/85">
+            Ryan Callahan opened Ryan's Restaurant in 2011 after training under James Beard-nominated chefs in Charleston and New Orleans. His vision was simple: bring honest, elevated Southern cooking to the heart of Savannah's historic district.
+          </p>
+          <p class="mt-6 text-base leading-8 text-amber-100/85">
+            Since then, the restaurant has grown into a beloved gathering place for celebratory dinners, intimate evenings, and unforgettable meals shaped by the rhythms of the Lowcountry and the best of Georgia's seasonal harvest.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- TEAM SECTION: Spotlight on the leadership and service team                  -->
+    <!-- Features: Elegant cards, role labels, responsive grid                       -->
+    <!-- ============================================================================ -->
+    <section data-section="team" class="border-b border-amber-200/10">
+      <div class="mx-auto max-w-7xl px-4 py-16 md:px-8 lg:px-12 lg:py-24">
+        <div class="max-w-2xl">
+          <p class="text-sm tracking-[0.3em] text-amber-300 uppercase">Meet the Team</p>
+          <h2 class="mt-3 text-3xl font-semibold text-amber-50 sm:text-4xl">The people behind the experience</h2>
+        </div>
+
+        <div class="mt-10 grid gap-6 md:grid-cols-3">
+          <article class="rounded-2xl border border-amber-200/10 bg-emerald-950/30 p-6 shadow-lg shadow-black/20">
+            <h3 class="text-2xl font-semibold text-amber-50">Ryan Callahan</h3>
+            <p class="mt-2 text-sm tracking-[0.2em] text-amber-300 uppercase">Chef / Owner</p>
+            <p class="mt-4 leading-7 text-amber-100/85">
+              Ryan leads the kitchen with a devotion to seasonality, balance, and the soul of Southern cuisine.
+            </p>
+          </article>
+
+          <article class="rounded-2xl border border-amber-200/10 bg-emerald-950/30 p-6 shadow-lg shadow-black/20">
+            <h3 class="text-2xl font-semibold text-amber-50">Dani Osei</h3>
+            <p class="mt-2 text-sm tracking-[0.2em] text-amber-300 uppercase">Executive Sous Chef</p>
+            <p class="mt-4 leading-7 text-amber-100/85">
+              Dani brings precision, creativity, and an instinct for vibrant flavor to every menu detail.
+            </p>
+          </article>
+
+          <article class="rounded-2xl border border-amber-200/10 bg-emerald-950/30 p-6 shadow-lg shadow-black/20">
+            <h3 class="text-2xl font-semibold text-amber-50">Marcus Webb</h3>
+            <p class="mt-2 text-sm tracking-[0.2em] text-amber-300 uppercase">Front of House Manager</p>
+            <p class="mt-4 leading-7 text-amber-100/85">
+              Marcus ensures every guest feels warmly welcomed, graciously guided, and perfectly cared for.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- PHILOSOPHY SECTION: Sourcing, sustainability, and daily craft               -->
+    <!-- Features: Highlight list with premium visual hierarchy                       -->
+    <!-- ============================================================================ -->
+    <section data-section="philosophy" class="border-b border-amber-200/10">
+      <div class="mx-auto max-w-7xl px-4 py-16 md:px-8 lg:px-12 lg:py-24">
+        <div class="grid gap-10 lg:grid-cols-2 lg:items-start">
+          <div>
+            <p class="text-sm tracking-[0.3em] text-amber-300 uppercase">Our Philosophy</p>
+            <h2 class="mt-3 text-3xl font-semibold text-amber-50 sm:text-4xl">Thoughtful ingredients, made from scratch daily</h2>
+          </div>
+
+          <div class="grid gap-4">
+            <div class="rounded-2xl border border-amber-200/10 bg-slate-900/50 p-5">
+              <h3 class="text-xl font-semibold text-amber-50">Farm-to-table sourcing</h3>
+              <p class="mt-2 leading-7 text-amber-100/85">We partner with local Georgia farms to bring the freshest produce, herbs, and heirloom ingredients to the table.</p>
+            </div>
+            <div class="rounded-2xl border border-amber-200/10 bg-slate-900/50 p-5">
+              <h3 class="text-xl font-semibold text-amber-50">Sustainable seafood</h3>
+              <p class="mt-2 leading-7 text-amber-100/85">Our seafood selections are guided by responsible sourcing and a commitment to coastal stewardship.</p>
+            </div>
+            <div class="rounded-2xl border border-amber-200/10 bg-slate-900/50 p-5">
+              <h3 class="text-xl font-semibold text-amber-50">Scratch kitchen every day</h3>
+              <p class="mt-2 leading-7 text-amber-100/85">Stocks, sauces, desserts, and breads are prepared in-house for depth, consistency, and unmistakable character.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- AWARDS SECTION: Recognition and accolades                                    -->
+    <!-- Features: Warm badge style, compact and scannable layout                     -->
+    <!-- ============================================================================ -->
+    <section data-section="awards" class="border-b border-amber-200/10">
+      <div class="mx-auto max-w-7xl px-4 py-16 md:px-8 lg:px-12 lg:py-24">
+        <div class="max-w-2xl">
+          <p class="text-sm tracking-[0.3em] text-amber-300 uppercase">Awards & Recognition</p>
+          <h2 class="mt-3 text-3xl font-semibold text-amber-50 sm:text-4xl">A proud record of excellence</h2>
+        </div>
+
+        <div class="mt-10 grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div class="rounded-2xl border border-amber-200/10 bg-amber-100/5 p-5">
+            <p class="text-lg font-semibold text-amber-50">OpenTable Diner's Choice</p>
+            <p class="mt-1 text-amber-200/80">2022–2024</p>
+          </div>
+          <div class="rounded-2xl border border-amber-200/10 bg-amber-100/5 p-5">
+            <p class="text-lg font-semibold text-amber-50">Savannah Magazine</p>
+            <p class="mt-1 text-amber-200/80">Best Fine Dining 2023</p>
+          </div>
+          <div class="rounded-2xl border border-amber-200/10 bg-amber-100/5 p-5">
+            <p class="text-lg font-semibold text-amber-50">Georgia Trend</p>
+            <p class="mt-1 text-amber-200/80">Top Restaurant</p>
+          </div>
+          <div class="rounded-2xl border border-amber-200/10 bg-amber-100/5 p-5">
+            <p class="text-lg font-semibold text-amber-50">Savannah Favorite</p>
+            <p class="mt-1 text-amber-200/80">Celebrated for hospitality and refined Southern cuisine</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- CTA SECTION: Soft call-to-action directing guests to dine or connect        -->
+    <!-- Features: Contrasting card, two actionable links                            -->
+    <!-- ============================================================================ -->
+    <section data-section="cta" class="border-b border-amber-200/10">
+      <div class="mx-auto max-w-7xl px-4 py-16 md:px-8 lg:px-12 lg:py-24">
+        <div class="rounded-3xl border border-amber-200/10 bg-gradient-to-br from-emerald-950/70 to-slate-900/80 p-8 md:p-12">
+          <div class="max-w-3xl">
+            <p class="text-sm tracking-[0.3em] text-amber-300 uppercase">Plan Your Visit</p>
+            <h2 class="mt-3 text-3xl font-semibold text-amber-50 sm:text-4xl">Join us for a meal rooted in place, craft, and hospitality</h2>
+            <p class="mt-5 max-w-2xl leading-8 text-amber-100/85">
+              Whether you're celebrating something special or simply craving a memorable evening in Savannah, Ryan's Restaurant welcomes you to a table with warmth and intention.
+            </p>
+          </div>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href="/menu" class="rounded-full bg-amber-300 px-6 py-3 font-semibold text-slate-950 transition hover:bg-amber-200">Explore Menu</a>
+            <a href="/contact" class="rounded-full border border-amber-200/20 px-6 py-3 font-semibold text-amber-50 transition hover:bg-amber-100/10">Contact Us</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================================ -->
+  <!-- FOOTER: Address, phone number, and closing brand message                     -->
+  <!-- Features: Clear hierarchy, accessible contrast, persistent contact info     -->
+  <!-- ============================================================================ -->
+  <footer data-section="footer" class="bg-slate-950">
+    <div class="mx-auto max-w-7xl px-4 py-10 md:px-8 lg:px-12">
+      <div class="flex flex-col gap-4 border-t border-amber-200/10 pt-8 md:flex-row md:items-center md:justify-between">
+        <p class="text-sm text-amber-100/70">411 Congress Street, Savannah GA 31401</p>
+        <p class="text-sm text-amber-100/70">(912) 555-0347</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

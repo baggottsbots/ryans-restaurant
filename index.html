@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- BASE:START (managed by Coding Agent — do not edit) -->
+<base href="/ryans-restaurant/">
+<!-- BASE:END -->
+
+  <base href="/ryans-restaurant/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+
+<!-- SEO Meta Tags -->
+<title>Ryan's Restaurant | Southern Fine Dining in Savannah, GA</title>
+<meta name="description" content="Upscale home page for Ryan's Restaurant in Savannah, GA featuring signature Southern dishes, elegant ambiance, guest testimonials, hours, and location." />
+<meta property="og:title" content="Ryan's Restaurant | Southern Fine Dining in Savannah, GA" />
+<meta property="og:description" content="Upscale home page for Ryan's Restaurant in Savannah, GA featuring signature Southern dishes, elegant ambiance, guest testimonials, hours, and location." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Ryan's Restaurant | Southern Fine Dining in Savannah, GA" />
+<meta name="twitter:description" content="Upscale home page for Ryan's Restaurant in Savannah, GA featuring signature Southern dishes, elegant ambiance, guest testimonials, hours, and location." />
+<!-- End SEO Meta Tags -->
+
+<script data-field-replace>
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var fields={};
+  var paramMap={
+    'first_name':'firstName','last_name':'lastName','full_name':'fullName',
+    'email':'email','phone':'phone','company':'company',
+    'city':'city','state':'state','country':'country'
+  };
+  var skipTags={'SCRIPT':1,'STYLE':1,'NOSCRIPT':1,'TEXTAREA':1,'CODE':1,'PRE':1};
+  var hasUrlFields=false;
+  for(var p in paramMap){
+    var v=params.get(p);
+    if(v){fields[paramMap[p]]=v;hasUrlFields=true;}
+  }
+  var contactId=params.get('contact_id');
+  function esc(s){
+    if(!s)return s;
+    var d=document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+  function doReplace(data){
+    var r={};
+    r['{{full_name}}']=esc(((data.firstName||'')+' '+(data.lastName||'')).trim()||((data.fullName||data.name)||''));
+    r['{{first_name}}']=esc(data.firstName||(data.name?data.name.split(' ')[0]:'')||'');
+    r['{{last_name}}']=esc(data.lastName||(data.name&&data.name.indexOf(' ')>-1?data.name.substring(data.name.indexOf(' ')+1):'')||'');
+    r['{{email}}']=esc(data.email||'');
+    r['{{phone}}']=esc(data.phone||'');
+    r['{{company}}']=esc(data.company||'');
+    r['{{city}}']=esc(data.city||'');
+    r['{{state}}']=esc(data.state||'');
+    r['{{country}}']=esc(data.country||'');
+    r['{{date}}']=new Date().toLocaleDateString();
+    r['{{time}}']=new Date().toLocaleTimeString();
+    r['{{location}}']=[data.city,data.state,data.country].filter(Boolean).join(', ');
+    r['{{tracking_id}}']=esc(data.trackingId||'');
+    r['{{lastClickedProduct}}']=esc(data.lastClickedProduct||'');
+    r['{{lastProductClickDate}}']=esc(data.lastProductClickDate||'');
+    r['{{lastClickedProductPrice}}']=esc(data.lastClickedProductPrice||'');
+    r['{{lastClickedProductURL}}']=esc(data.lastClickedProductURL||'');
+    r['{{productsClickedCount}}']=esc(data.productsClickedCount||'0');
+    r['{{ip_address}}']=esc(data.ipAddress||'');
+    r['{{ip}}']=esc(data.ipAddress||'');
+    if(data.customFields){
+      for(var k in data.customFields){
+        r['{{'+k+'}}']=esc(String(data.customFields[k]||''));
+      }
+    }
+    params.forEach(function(v,k){
+      if(!paramMap[k]&&k!=='contact_id'&&k!=='page_id'&&k.indexOf('utm_')!==0){
+        r['{{'+k+'}}']=esc(v);
+      }
+    });
+    var hasValues=false;
+    for(var key in r){if(r[key]){hasValues=true;break;}}
+    if(!hasValues)return;
+    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
+      acceptNode:function(n){
+        var p=n.parentNode;
+        if(p&&skipTags[p.nodeName])return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var node;
+    while(node=walker.nextNode()){
+      var txt=node.nodeValue;
+      if(txt&&txt.indexOf('{{')>-1){
+        var changed=txt;
+        for(var ph in r){
+          if(r[ph]&&changed.indexOf(ph)>-1){
+            changed=changed.split(ph).join(r[ph]);
+          }
+        }
+        if(changed!==txt)node.nodeValue=changed;
+      }
+    }
+    var attrs=['value','placeholder','content','alt','title'];
+    attrs.forEach(function(attr){
+      var els=document.querySelectorAll('['+attr+'*="{{"]');
+      for(var i=0;i<els.length;i++){
+        var tag=els[i].tagName;
+        if(skipTags[tag])continue;
+        var val=els[i].getAttribute(attr);
+        if(val){
+          var nv=val;
+          for(var ph in r){
+            if(r[ph]&&nv.indexOf(ph)>-1){
+              nv=nv.split(ph).join(r[ph]);
+            }
+          }
+          if(nv!==val)els[i].setAttribute(attr,nv);
+        }
+      }
+    });
+  }
+  function run(){
+    if(contactId){
+      var xhr=new XMLHttpRequest();
+      xhr.open('GET','https://paymegpt.com/api/landing/context/'+encodeURIComponent(contactId)+'?page_id=3562');
+      xhr.onload=function(){
+        if(xhr.status===200){
+          try{
+            var resp=JSON.parse(xhr.responseText);
+            if(resp.success&&resp.contact){
+              var merged=resp.contact;
+              for(var k in fields){merged[k]=fields[k];}
+              doReplace(merged);
+              return;
+            }
+          }catch(e){}
+        }
+        if(hasUrlFields)doReplace(fields);
+      };
+      xhr.onerror=function(){if(hasUrlFields)doReplace(fields);};
+      xhr.send();
+    }else if(hasUrlFields){
+      doReplace(fields);
+    }
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',run);}
+  else{run();}
+})();
+</script>
+<script data-payment>
+(function(){
+  var slug='TSPcEVF';
+  var apiBase='https://paymegpt.com';
+  function findEmail(){
+    var ids=['email','emailAddress','buyer-email','buyerEmail','user-email','userEmail','checkout-email','customer-email','contact-email'];
+    for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el&&el.value&&el.value.includes('@'))return el.value.trim();}
+    var inputs=document.querySelectorAll('input[type="email"],input[name*="email"],input[placeholder*="email"],input[placeholder*="Email"]');
+    for(var j=0;j<inputs.length;j++){if(inputs[j].value&&inputs[j].value.includes('@'))return inputs[j].value.trim();}
+    return '';
+  }
+  function findName(){
+    var ids=['name','fullName','full-name','buyer-name','buyerName','customer-name','userName','user-name'];
+    for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el&&el.value)return el.value.trim();}
+    var inputs=document.querySelectorAll('input[name*="name"]:not([name*="email"]):not([type="email"]),input[placeholder*="name"]:not([placeholder*="email"]):not([type="email"]),input[placeholder*="Name"]:not([type="email"])');
+    for(var j=0;j<inputs.length;j++){if(inputs[j].value)return inputs[j].value.trim();}
+    return '';
+  }
+  var __realProcessPayment=function(a,b,c,d,e){
+    var amountCents,email,productName,productDescription,customerName,quantity;
+    if(a&&typeof a==='object'){
+      amountCents=a.amountCents;email=a.email;productName=a.productName;
+      productDescription=a.productDescription||'';customerName=a.name||'';quantity=a.quantity||1;
+    }else{
+      amountCents=typeof a==='number'?a:0;productName=typeof b==='string'?b:'';
+      productDescription=typeof c==='string'?c:'';email='';customerName='';quantity=1;
+    }
+    if(!email)email=findEmail();
+    if(!customerName)customerName=findName();
+    if(!productName){alert('Product name is required.');return Promise.reject('no_product_name');}
+    if(!amountCents||amountCents<100){alert('Amount must be at least $1.00');return Promise.reject('invalid_amount');}
+    if(!email){alert('Please enter your email address.');return Promise.reject('no_email');}
+    var successBase=window.location.href.split('?')[0];
+    return fetch(apiBase+'/api/landing-pages/public/'+slug+'/payment/checkout',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,name:customerName,amountCents:amountCents,productName:productName,productDescription:productDescription,quantity:quantity,successUrl:successBase+'?payment=success&product='+encodeURIComponent(productName)+'&session_id={CHECKOUT_SESSION_ID}',cancelUrl:successBase+'?payment=cancelled'})
+    }).then(function(r){return r.json();}).then(function(d){
+      if(d.checkoutUrl){window.location.href=d.checkoutUrl;}
+      else{alert(d.error||'Failed to process payment');throw new Error(d.error);}
+    });
+  };
+  Object.defineProperty(window,'__processPayment',{value:__realProcessPayment,writable:false,configurable:false});
+  document.addEventListener('DOMContentLoaded',function(){
+    var urlParams=new URLSearchParams(window.location.search);
+    if(urlParams.get('payment')==='success'){
+      var pName=urlParams.get('product')||'your item';
+      var overlay=document.createElement('div');overlay.id='payment-success-overlay';
+      overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:999999;font-family:system-ui,-apple-system,sans-serif;';
+      overlay.innerHTML='<div style="background:white;border-radius:16px;padding:40px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.15);"><div style="width:64px;height:64px;border-radius:50%;background:#dcfce7;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><h2 style="margin:0 0 12px;font-size:24px;font-weight:700;color:#111827;">Payment Successful!</h2><p style="margin:0 0 24px;color:#6b7280;font-size:16px;">Thank you for purchasing '+pName.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'.</p><button onclick="document.getElementById(\'payment-success-overlay\').remove();window.history.replaceState({},\'\',window.location.pathname);" style="padding:12px 32px;font-size:16px;font-weight:600;background:#16a34a;color:white;border:none;border-radius:8px;cursor:pointer;">Continue</button></div>';
+      document.body.appendChild(overlay);
+    }
+  });
+})();
+</script>  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="antialiased">
+  <!-- ============================================================================ -->
+  <!-- NAVBAR SECTION: Main navigation with brand mark and primary page links      -->
+  <!-- Features: Sticky header, responsive links, premium gold accents             -->
+  <!-- Mobile Padding: Safe spacing on small screens with padded container         -->
+  <!-- ============================================================================ -->
+  <nav data-section="navbar" class="sticky top-0 z-50 border-b border-white/10 bg-[#09111d]/90 backdrop-blur-md">
+    <div class="mx-auto max-w-7xl px-4 py-4 sm:px-6 md:px-8 lg:px-12 flex items-center justify-between gap-4">
+      <a href="/" class="group flex items-center gap-3 text-cream" aria-label="Ryan's Restaurant home">
+        <span class="flex h-11 w-11 items-center justify-center rounded-full border border-gold/40 bg-gold/10 text-gold serif text-xl font-bold">R</span>
+        <span class="leading-tight">
+          <span class="block serif text-lg tracking-wide">Ryan's Restaurant</span>
+          <span class="block text-xs uppercase tracking-[0.3em] text-cream/65">Savannah, Georgia</span>
+        </span>
+      </a>
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-cream/85">
+        <a href="/" class="gold-link transition-colors">Home</a>
+        <a href="/menu" class="gold-link transition-colors">Menu</a>
+        <a href="/about" class="gold-link transition-colors">About</a>
+        <a href="/contact" class="gold-link transition-colors">Contact</a>
+      </div>
+      <a href="/contact" class="inline-flex items-center rounded-full border border-gold/45 bg-gold px-5 py-2.5 text-sm font-semibold text-[#0f1f33] transition hover:bg-[#e3c27d] focus:outline-none focus:ring-2 focus:ring-gold/70">
+        Reserve
+      </a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ============================================================================ -->
+    <!-- HERO SECTION: Main landing area with headline, subtext, and primary CTA     -->
+    <!-- Features: Luxurious gradient, elegant serif typography, clear reservation CTA -->
+    <!-- Mobile Padding: Generous left/right padding to prevent edge clipping         -->
+    <!-- ============================================================================ -->
+    <section data-section="hero" class="relative overflow-hidden">
+      <div class="absolute inset-0 opacity-45" aria-hidden="true">
+        <div class="absolute -top-20 left-1/4 h-72 w-72 rounded-full bg-gold/20 blur-3xl"></div>
+        <div class="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-emerald-900/30 blur-3xl"></div>
+      </div>
+      <div class="relative mx-auto max-w-7xl px-4 py-16 sm:px-6 md:px-8 lg:px-12 lg:py-24">
+        <div class="grid items-center gap-12 lg:grid-cols-2">
+          <div class="max-w-2xl">
+            <p class="mb-4 inline-flex rounded-full border border-gold/30 bg-white/5 px-4 py-2 text-xs uppercase tracking-[0.35em] text-gold/90">Fine Southern Dining in Savannah</p>
+            <h1 class="serif text-4xl font-semibold leading-tight text-cream sm:text-5xl lg:text-6xl">
+              Southern Soul.
+              <span class="block text-gold">Savannah Spirit.</span>
+            </h1>
+            <p class="mt-6 max-w-xl text-base leading-8 text-cream/80 sm:text-lg">
+              Ryan's Restaurant brings refined Lowcountry cuisine to a warm, candlelit setting—where timeless hospitality, coastal ingredients, and classic Southern flavor meet on Congress Street.
+            </p>
+            <div class="mt-8 flex flex-wrap items-center gap-4">
+              <a href="/contact" class="inline-flex items-center rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-[#0f1f33] transition hover:bg-[#e3c27d] focus:outline-none focus:ring-2 focus:ring-gold/70">
+                Reserve a Table
+              </a>
+              <a href="/menu" class="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-7 py-3.5 text-sm font-semibold text-cream transition hover:border-gold/35 hover:bg-white/10">
+                View the Menu
+              </a>
+            </div>
+            <div class="mt-10 flex flex-wrap gap-6 text-sm text-cream/72">
+              <div>
+                <span class="block text-gold serif text-xl">2011</span>
+                <span>A Savannah institution</span>
+              </div>
+              <div>
+                <span class="block text-gold serif text-xl">Lowcountry</span>
+                <span>Inspired seasonal cuisine</span>
+              </div>
+              <div>
+                <span class="block text-gold serif text-xl">Elegant</span>
+                <span>Dining room ambiance</span>
+              </div>
+            </div>
+          </div>
+          <div class="glass-panel rounded-3xl p-6 sm:p-8">
+            <div class="rounded-2xl border border-gold/20 bg-gradient-to-br from-white/10 to-white/5 p-6">
+              <p class="text-xs uppercase tracking-[0.35em] text-gold/80">Tonight's Experience</p>
+              <h2 class="serif mt-3 text-2xl text-cream">A celebrated dinner destination for locals and travelers alike</h2>
+              <div class="warm-divider my-5 h-px w-full"></div>
+              <div class="space-y-4 text-sm leading-7 text-cream/78">
+                <p>From the first pour of wine to the final bite of dessert, every detail is designed to feel intimate, polished, and unmistakably Southern.</p>
+                <p>Expect impeccable service, deep coastal flavors, and an atmosphere that glows with old-world charm.</p>
+              </div>
+              <div class="mt-6 rounded-2xl border border-gold/20 bg-[#09111d]/60 p-5">
+                <p class="text-xs uppercase tracking-[0.3em] text-gold/80">Tonight's Recommendation</p>
+                <p class="mt-2 serif text-xl text-cream">Bourbon Peach Duck Breast with charred greens and spiced pecan glaze</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- FEATURES SECTION: Signature dishes and house specialties                     -->
+    <!-- Features: Three-column card layout, prices, concise culinary descriptions    -->
+    <!-- Mobile Padding: Stack-friendly cards with consistent spacing                 -->
+    <!-- ============================================================================ -->
+    <section data-section="features" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:px-8 lg:px-12">
+      <div class="flex items-end justify-between gap-6 flex-wrap">
+        <div>
+          <p class="text-xs uppercase tracking-[0.35em] text-gold/80">Featured Dishes</p>
+          <h2 class="serif mt-3 text-3xl text-cream sm:text-4xl">Signature plates from the heart of the Lowcountry</h2>
+        </div>
+        <a href="/menu" class="text-sm font-semibold text-gold transition hover:text-[#f1ddae]">Explore the full menu →</a>
+      </div>
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        <article class="card-hover rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="flex items-start justify-between gap-4">
+            <h3 class="serif text-2xl text-cream">Lowcountry Shrimp &amp; Grits</h3>
+            <span class="rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-sm font-semibold text-gold">$28</span>
+          </div>
+          <p class="mt-4 text-sm leading-7 text-cream/78">Jumbo shrimp over creamy stone-ground grits with smoked bacon, scallion butter, and a touch of coastal heat.</p>
+        </article>
+        <article class="card-hover rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="flex items-start justify-between gap-4">
+            <h3 class="serif text-2xl text-cream">Pecan-Crusted Grouper</h3>
+            <span class="rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-sm font-semibold text-gold">$36</span>
+          </div>
+          <p class="mt-4 text-sm leading-7 text-cream/78">Pan-seared grouper finished with toasted pecans, lemon beurre blanc, and seasonal vegetables sourced from Georgia growers.</p>
+        </article>
+        <article class="card-hover rounded-3xl border border-white/10 bg-white/5 p-6">
+          <div class="flex items-start justify-between gap-4">
+            <h3 class="serif text-2xl text-cream">Bourbon Peach Duck Breast</h3>
+            <span class="rounded-full border border-gold/25 bg-gold/10 px-3 py-1 text-sm font-semibold text-gold">$39</span>
+          </div>
+          <p class="mt-4 text-sm leading-7 text-cream/78">Seared duck breast glazed with bourbon peach reduction, served with heirloom grits and roasted brassicas.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- ABOUT TEASER SECTION: Brand story and heritage statement                     -->
+    <!-- Features: Short narrative, refined emphasis, learn-more destination link     -->
+    <!-- Mobile Padding: Comfortable text measure and spacing                         -->
+    <!-- ============================================================================ -->
+    <section data-section="about-teaser" class="border-y border-white/10 bg-[#0b1625]">
+      <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:px-8 lg:px-12">
+        <div class="grid gap-8 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+          <div>
+            <p class="text-xs uppercase tracking-[0.35em] text-gold/80">About Ryan's</p>
+            <h2 class="serif mt-3 text-3xl text-cream sm:text-4xl">A Savannah Institution since 2011</h2>
+            <p class="mt-5 max-w-2xl text-base leading-8 text-cream/78">
+              Rooted in Southern tradition and elevated by modern technique, Ryan's Restaurant has become a cherished gathering place for anniversaries, business dinners, and unforgettable nights out in the heart of Savannah.
+            </p>
+          </div>
+          <div class="glass-panel rounded-3xl p-8">
+            <p class="text-sm uppercase tracking-[0.3em] text-gold/80">Our Philosophy</p>
+            <p class="mt-4 serif text-2xl text-cream">Hospitality should feel as timeless as the city itself.</p>
+            <a href="/about" class="mt-6 inline-flex items-center text-sm font-semibold text-gold transition hover:text-[#f1ddae]">Learn More About Our Story →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- TESTIMONIALS SECTION: Guest praise and social proof                          -->
+    <!-- Features: Three quote cards with tasteful typography                         -->
+    <!-- Mobile Padding: Single-column stacked cards on smaller screens               -->
+    <!-- ============================================================================ -->
+    <section data-section="testimonials" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:px-8 lg:px-12">
+      <div class="text-center">
+        <p class="text-xs uppercase tracking-[0.35em] text-gold/80">Guest Impressions</p>
+        <h2 class="serif mt-3 text-3xl text-cream sm:text-4xl">What Savannah diners are saying</h2>
+      </div>
+      <div class="mt-10 grid gap-6 md:grid-cols-3">
+        <figure class="card-hover rounded-3xl border border-white/10 bg-white/5 p-6">
+          <blockquote class="text-sm leading-7 text-cream/82">“Every course felt thoughtful and luxurious. The shrimp &amp; grits alone are worth the reservation, but the service made the evening unforgettable.”</blockquote>
+          <figcaption class="mt-5 text-sm font-semibold text-gold">— Lauren M., Charleston</figcaption>
+        </figure>
+        <figure class="card-hover rounded-3xl border border-white/10 bg-white/5 p-6">
+          <blockquote class="text-sm leading-7 text-cream/82">“Ryan's captures Savannah's charm perfectly—warm, elegant, and deeply flavorful. The grouper was flawless.”</blockquote>
+          <figcaption class="mt-5 text-sm font-semibold text-gold">— Michael T., Atlanta</figcaption>
+        </figure>
+        <figure class="card-hover rounded-3xl border border-white/10 bg-white/5 p-6">
+          <blockquote class="text-sm leading-7 text-cream/82">“From the lighting to the wine list, everything feels upscale without losing its Southern soul. A true gem on Congress Street.”</blockquote>
+          <figcaption class="mt-5 text-sm font-semibold text-gold">— Denise R., Savannah</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- HOURS & LOCATION SECTION: Visit details, address, phone, and service hours   -->
+    <!-- Features: Clear contact information and easy-to-scan layout                   -->
+    <!-- Mobile Padding: Large tap targets and responsive columns                      -->
+    <!-- ============================================================================ -->
+    <section data-section="hours-location" class="border-y border-white/10 bg-[#0b1625]">
+      <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:px-8 lg:px-12">
+        <div class="grid gap-6 lg:grid-cols-2">
+          <div class="glass-panel rounded-3xl p-8">
+            <p class="text-xs uppercase tracking-[0.35em] text-gold/80">Hours &amp; Location</p>
+            <h2 class="serif mt-3 text-3xl text-cream">Find us in the historic heart of Savannah</h2>
+            <div class="mt-6 space-y-4 text-sm leading-7 text-cream/80">
+              <p><span class="font-semibold text-gold">Address:</span> 411 Congress Street, Savannah, GA 31401</p>
+              <p><span class="font-semibold text-gold">Phone:</span> (912) 555-0347</p>
+              <p><span class="font-semibold text-gold">Mon-Thu:</span> 5pm-10pm</p>
+              <p><span class="font-semibold text-gold">Fri-Sat:</span> 5pm-11pm</p>
+              <p><span class="font-semibold text-gold">Sun:</span> 11am-9pm <span class="text-cream/65">(Brunch)</span></p>
+            </div>
+          </div>
+          <div class="rounded-3xl border border-white/10 bg-[linear-gradient(180deg,rgba(200,169,106,.12),rgba(255,255,255,.04))] p-8">
+            <h3 class="serif text-2xl text-cream">Plan Your Evening</h3>
+            <p class="mt-4 text-sm leading-7 text-cream/78">
+              Whether you're joining us for a celebratory dinner, a slow Sunday brunch, or a special night in the city, our team is ready to welcome you with polished service and signature Southern warmth.
+            </p>
+            <a href="/contact" class="mt-6 inline-flex items-center rounded-full bg-gold px-6 py-3 text-sm font-semibold text-[#0f1f33] transition hover:bg-[#e3c27d]">
+              Reserve a Table
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================================ -->
+    <!-- CTA SECTION: Final conversion prompt                                         -->
+    <!-- Features: Strong reservation message with menu/contact links                  -->
+    <!-- Mobile Padding: Balanced spacing and centered content                         -->
+    <!-- ============================================================================ -->
+    <section data-section="cta" class="mx-auto max-w-7xl px-4 py-16 sm:px-6 md:px-8 lg:px-12">
+      <div class="glass-panel rounded-[2rem] px-6 py-10 text-center sm:px-10 sm:py-14">
+        <p class="text-xs uppercase tracking-[0.35em] text-gold/80">Tonight's Table Awaits</p>
+        <h2 class="serif mt-3 text-3xl text-cream sm:text-4xl">Join us for a refined taste of Savannah</h2>
+        <p class="mx-auto mt-5 max-w-2xl text-base leading-8 text-cream/78">
+          Experience an evening defined by heritage recipes, gracious service, and the unmistakable charm of the Lowcountry.
+        </p>
+        <div class="mt-8 flex flex-wrap justify-center gap-4">
+          <a href="/contact" class="inline-flex items-center rounded-full bg-gold px-7 py-3.5 text-sm font-semibold text-[#0f1f33] transition hover:bg-[#e3c27d]">Reserve a Table</a>
+          <a href="/menu" class="inline-flex items-center rounded-full border border-white/15 bg-white/5 px-7 py-3.5 text-sm font-semibold text-cream transition hover:border-gold/35 hover:bg-white/10">Browse Menu</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================================================================ -->
+  <!-- FOOTER SECTION: Contact details, quick links, and restaurant summary         -->
+  <!-- Features: Consistent branding, correct relative navigation paths             -->
+  <!-- Mobile Padding: Tidy stacked layout for smaller screens                      -->
+  <!-- ============================================================================ -->
+  <footer data-section="footer" class="border-t border-white/10 bg-[#08101a]">
+    <div class="mx-auto max-w-7xl px-4 py-12 sm:px-6 md:px-8 lg:px-12">
+      <div class="grid gap-10 md:grid-cols-3">
+        <div>
+          <h2 class="serif text-2xl text-cream">Ryan's Restaurant</h2>
+          <p class="mt-4 max-w-sm text-sm leading-7 text-cream/72">
+            Southern-inspired fine dining in Savannah, Georgia—where classic hospitality meets elevated Lowcountry cuisine.
+          </p>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-[0.25em] text-gold/80">Navigate</h3>
+          <ul class="mt-4 space-y-3 text-sm text-cream/75">
+            <li><a href="/" class="gold-link transition-colors">Home</a></li>
+            <li><a href="/menu" class="gold-link transition-colors">Menu</a></li>
+            <li><a href="/about" class="gold-link transition-colors">About</a></li>
+            <li><a href="/contact" class="gold-link transition-colors">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-sm font-semibold uppercase tracking-[0.25em] text-gold/80">Visit</h3>
+          <ul class="mt-4 space-y-3 text-sm text-cream/75">
+            <li>411 Congress Street, Savannah GA 31401</li>
+            <li>(912) 555-0347</li>
+            <li>Mon-Thu 5pm-10pm</li>
+            <li>Fri-Sat 5pm-11pm</li>
+            <li>Sun 11am-9pm (Brunch)</li>
+          </ul>
+        </div>
+      </div>
+      <div class="warm-divider mt-10 h-px w-full"></div>
+      <p class="mt-6 text-center text-xs uppercase tracking-[0.28em] text-cream/55">© 2025 Ryan's Restaurant, Savannah, GA</p>
+    </div>
+  </footer>
+</body>
+</html>

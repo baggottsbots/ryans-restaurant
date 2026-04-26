@@ -1,0 +1,22 @@
+/* ===== GLOBAL THEME STYLES ===== */
+    /* Warm, elegant palette with serif-forward typography and soft contrast */
+    body {
+      background: #071826;
+      color: #f5ead7;
+      font-family: Georgia, 'Times New Roman', serif;
+    }
+
+    /* ===== ACCESSIBILITY FOCUS STYLES ===== */
+    /* Clear keyboard focus visibility for interactive elements */
+    :focus-visible {
+      outline: 2px solid #d8b56a;
+      outline-offset: 3px;
+    }
+
+    /* ===== SUBTLE TEXTURE OVERLAY ===== */
+    /* Adds depth without sacrificing readability */
+    .page-surface {
+      background-image:
+        radial-gradient(circle at top, rgba(216, 181, 106, 0.14), transparent 38%),
+        linear-gradient(180deg, rgba(7, 24, 38, 0.96), rgba(10, 37, 31, 0.98));
+    }

@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- BASE:START (managed by Coding Agent — do not edit) -->
+<base href="/ryans-restaurant/">
+<!-- BASE:END -->
+
+  <base href="/ryans-restaurant/">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+
+<!-- SEO Meta Tags -->
+<title>Contact Ryan's Restaurant Savannah GA | Reservations &amp; Private Dining</title>
+<meta name="description" content="Elegant contact page for Ryan's Restaurant in Savannah, GA with reservations, private dining, catering inquiry form, address, hours, phone, and email." />
+<meta property="og:title" content="Contact Ryan's Restaurant Savannah GA | Reservations &amp; Private Dining" />
+<meta property="og:description" content="Elegant contact page for Ryan's Restaurant in Savannah, GA with reservations, private dining, catering inquiry form, address, hours, phone, and email." />
+<meta property="og:type" content="website" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Contact Ryan's Restaurant Savannah GA | Reservations &amp; Private Dining" />
+<meta name="twitter:description" content="Elegant contact page for Ryan's Restaurant in Savannah, GA with reservations, private dining, catering inquiry form, address, hours, phone, and email." />
+<!-- End SEO Meta Tags -->
+
+<script data-field-replace>
+(function(){
+  var params=new URLSearchParams(window.location.search);
+  var fields={};
+  var paramMap={
+    'first_name':'firstName','last_name':'lastName','full_name':'fullName',
+    'email':'email','phone':'phone','company':'company',
+    'city':'city','state':'state','country':'country'
+  };
+  var skipTags={'SCRIPT':1,'STYLE':1,'NOSCRIPT':1,'TEXTAREA':1,'CODE':1,'PRE':1};
+  var hasUrlFields=false;
+  for(var p in paramMap){
+    var v=params.get(p);
+    if(v){fields[paramMap[p]]=v;hasUrlFields=true;}
+  }
+  var contactId=params.get('contact_id');
+  function esc(s){
+    if(!s)return s;
+    var d=document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+  function doReplace(data){
+    var r={};
+    r['{{full_name}}']=esc(((data.firstName||'')+' '+(data.lastName||'')).trim()||((data.fullName||data.name)||''));
+    r['{{first_name}}']=esc(data.firstName||(data.name?data.name.split(' ')[0]:'')||'');
+    r['{{last_name}}']=esc(data.lastName||(data.name&&data.name.indexOf(' ')>-1?data.name.substring(data.name.indexOf(' ')+1):'')||'');
+    r['{{email}}']=esc(data.email||'');
+    r['{{phone}}']=esc(data.phone||'');
+    r['{{company}}']=esc(data.company||'');
+    r['{{city}}']=esc(data.city||'');
+    r['{{state}}']=esc(data.state||'');
+    r['{{country}}']=esc(data.country||'');
+    r['{{date}}']=new Date().toLocaleDateString();
+    r['{{time}}']=new Date().toLocaleTimeString();
+    r['{{location}}']=[data.city,data.state,data.country].filter(Boolean).join(', ');
+    r['{{tracking_id}}']=esc(data.trackingId||'');
+    r['{{lastClickedProduct}}']=esc(data.lastClickedProduct||'');
+    r['{{lastProductClickDate}}']=esc(data.lastProductClickDate||'');
+    r['{{lastClickedProductPrice}}']=esc(data.lastClickedProductPrice||'');
+    r['{{lastClickedProductURL}}']=esc(data.lastClickedProductURL||'');
+    r['{{productsClickedCount}}']=esc(data.productsClickedCount||'0');
+    r['{{ip_address}}']=esc(data.ipAddress||'');
+    r['{{ip}}']=esc(data.ipAddress||'');
+    if(data.customFields){
+      for(var k in data.customFields){
+        r['{{'+k+'}}']=esc(String(data.customFields[k]||''));
+      }
+    }
+    params.forEach(function(v,k){
+      if(!paramMap[k]&&k!=='contact_id'&&k!=='page_id'&&k.indexOf('utm_')!==0){
+        r['{{'+k+'}}']=esc(v);
+      }
+    });
+    var hasValues=false;
+    for(var key in r){if(r[key]){hasValues=true;break;}}
+    if(!hasValues)return;
+    var walker=document.createTreeWalker(document.body,NodeFilter.SHOW_TEXT,{
+      acceptNode:function(n){
+        var p=n.parentNode;
+        if(p&&skipTags[p.nodeName])return NodeFilter.FILTER_REJECT;
+        return NodeFilter.FILTER_ACCEPT;
+      }
+    });
+    var node;
+    while(node=walker.nextNode()){
+      var txt=node.nodeValue;
+      if(txt&&txt.indexOf('{{')>-1){
+        var changed=txt;
+        for(var ph in r){
+          if(r[ph]&&changed.indexOf(ph)>-1){
+            changed=changed.split(ph).join(r[ph]);
+          }
+        }
+        if(changed!==txt)node.nodeValue=changed;
+      }
+    }
+    var attrs=['value','placeholder','content','alt','title'];
+    attrs.forEach(function(attr){
+      var els=document.querySelectorAll('['+attr+'*="{{"]');
+      for(var i=0;i<els.length;i++){
+        var tag=els[i].tagName;
+        if(skipTags[tag])continue;
+        var val=els[i].getAttribute(attr);
+        if(val){
+          var nv=val;
+          for(var ph in r){
+            if(r[ph]&&nv.indexOf(ph)>-1){
+              nv=nv.split(ph).join(r[ph]);
+            }
+          }
+          if(nv!==val)els[i].setAttribute(attr,nv);
+        }
+      }
+    });
+  }
+  function run(){
+    if(contactId){
+      var xhr=new XMLHttpRequest();
+      xhr.open('GET','https://paymegpt.com/api/landing/context/'+encodeURIComponent(contactId)+'?page_id=3564');
+      xhr.onload=function(){
+        if(xhr.status===200){
+          try{
+            var resp=JSON.parse(xhr.responseText);
+            if(resp.success&&resp.contact){
+              var merged=resp.contact;
+              for(var k in fields){merged[k]=fields[k];}
+              doReplace(merged);
+              return;
+            }
+          }catch(e){}
+        }
+        if(hasUrlFields)doReplace(fields);
+      };
+      xhr.onerror=function(){if(hasUrlFields)doReplace(fields);};
+      xhr.send();
+    }else if(hasUrlFields){
+      doReplace(fields);
+    }
+  }
+  if(document.readyState==='loading'){document.addEventListener('DOMContentLoaded',run);}
+  else{run();}
+})();
+</script>
+<script data-payment>
+(function(){
+  var slug='xGnGmje2hA';
+  var apiBase='https://paymegpt.com';
+  function findEmail(){
+    var ids=['email','emailAddress','buyer-email','buyerEmail','user-email','userEmail','checkout-email','customer-email','contact-email'];
+    for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el&&el.value&&el.value.includes('@'))return el.value.trim();}
+    var inputs=document.querySelectorAll('input[type="email"],input[name*="email"],input[placeholder*="email"],input[placeholder*="Email"]');
+    for(var j=0;j<inputs.length;j++){if(inputs[j].value&&inputs[j].value.includes('@'))return inputs[j].value.trim();}
+    return '';
+  }
+  function findName(){
+    var ids=['name','fullName','full-name','buyer-name','buyerName','customer-name','userName','user-name'];
+    for(var i=0;i<ids.length;i++){var el=document.getElementById(ids[i]);if(el&&el.value)return el.value.trim();}
+    var inputs=document.querySelectorAll('input[name*="name"]:not([name*="email"]):not([type="email"]),input[placeholder*="name"]:not([placeholder*="email"]):not([type="email"]),input[placeholder*="Name"]:not([type="email"])');
+    for(var j=0;j<inputs.length;j++){if(inputs[j].value)return inputs[j].value.trim();}
+    return '';
+  }
+  var __realProcessPayment=function(a,b,c,d,e){
+    var amountCents,email,productName,productDescription,customerName,quantity;
+    if(a&&typeof a==='object'){
+      amountCents=a.amountCents;email=a.email;productName=a.productName;
+      productDescription=a.productDescription||'';customerName=a.name||'';quantity=a.quantity||1;
+    }else{
+      amountCents=typeof a==='number'?a:0;productName=typeof b==='string'?b:'';
+      productDescription=typeof c==='string'?c:'';email='';customerName='';quantity=1;
+    }
+    if(!email)email=findEmail();
+    if(!customerName)customerName=findName();
+    if(!productName){alert('Product name is required.');return Promise.reject('no_product_name');}
+    if(!amountCents||amountCents<100){alert('Amount must be at least $1.00');return Promise.reject('invalid_amount');}
+    if(!email){alert('Please enter your email address.');return Promise.reject('no_email');}
+    var successBase=window.location.href.split('?')[0];
+    return fetch(apiBase+'/api/landing-pages/public/'+slug+'/payment/checkout',{
+      method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email,name:customerName,amountCents:amountCents,productName:productName,productDescription:productDescription,quantity:quantity,successUrl:successBase+'?payment=success&product='+encodeURIComponent(productName)+'&session_id={CHECKOUT_SESSION_ID}',cancelUrl:successBase+'?payment=cancelled'})
+    }).then(function(r){return r.json();}).then(function(d){
+      if(d.checkoutUrl){window.location.href=d.checkoutUrl;}
+      else{alert(d.error||'Failed to process payment');throw new Error(d.error);}
+    });
+  };
+  Object.defineProperty(window,'__processPayment',{value:__realProcessPayment,writable:false,configurable:false});
+  document.addEventListener('DOMContentLoaded',function(){
+    var urlParams=new URLSearchParams(window.location.search);
+    if(urlParams.get('payment')==='success'){
+      var pName=urlParams.get('product')||'your item';
+      var overlay=document.createElement('div');overlay.id='payment-success-overlay';
+      overlay.style.cssText='position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.5);display:flex;align-items:center;justify-content:center;z-index:999999;font-family:system-ui,-apple-system,sans-serif;';
+      overlay.innerHTML='<div style="background:white;border-radius:16px;padding:40px;max-width:420px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.15);"><div style="width:64px;height:64px;border-radius:50%;background:#dcfce7;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg></div><h2 style="margin:0 0 12px;font-size:24px;font-weight:700;color:#111827;">Payment Successful!</h2><p style="margin:0 0 24px;color:#6b7280;font-size:16px;">Thank you for purchasing '+pName.replace(/</g,'&lt;').replace(/>/g,'&gt;')+'.</p><button onclick="document.getElementById(\'payment-success-overlay\').remove();window.history.replaceState({},\'\',window.location.pathname);" style="padding:12px 32px;font-size:16px;font-weight:600;background:#16a34a;color:white;border:none;border-radius:8px;cursor:pointer;">Continue</button></div>';
+      document.body.appendChild(overlay);
+    }
+  });
+})();
+</script>  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="min-h-screen antialiased">
+  <!-- ============================================================================ -->
+  <!-- NAVIGATION: Primary site navigation with restaurant branding                 -->
+  <!-- Features: Sticky top bar, accessible links, mobile-safe padding              -->
+  <!-- Mobile Padding: p-4 ensures content never touches viewport edges             -->
+  <!-- ============================================================================ -->
+  <nav data-section="navbar" class="sticky top-0 z-50 border-b border-white/10 bg-[#081625]/90 backdrop-blur-md">
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-4 py-4 sm:px-6 md:px-8 lg:px-12">
+      <a href="/" class="text-lg font-semibold tracking-[0.2em] text-[#f6e7bf] uppercase">
+        Ryan's Restaurant
+      </a>
+      <div class="flex items-center gap-5 text-sm font-medium text-[#f7f0e3]/90">
+        <a href="/" class="transition hover:text-[#d4af37]">Home</a>
+        <a href="/menu" class="transition hover:text-[#d4af37]">Menu</a>
+        <a href="/about" class="transition hover:text-[#d4af37]">About</a>
+        <a href="/contact" class="text-[#d4af37]">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ============================================================================ -->
+  <!-- HERO SECTION: Warm contact introduction with headline and subtitle           -->
+  <!-- Features: Elegant gradient panel, centered text, clear intent               -->
+  <!-- Mobile Padding: Generous spacing prevents clipping on small screens         -->
+  <!-- ============================================================================ -->
+  <header data-section="hero" class="hero-section">
+    <div class="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20 md:px-8 lg:px-12 lg:py-24">
+      <div class="gold-glow rounded-3xl border border-white/10 bg-[#0f2a22]/75 p-8 text-center shadow-2xl sm:p-10 lg:p-14">
+        <p class="mb-4 text-sm uppercase tracking-[0.35em] text-[#d4af37]">Savannah, Georgia</p>
+        <h1 class="text-4xl font-semibold leading-tight text-[#fff7e8] sm:text-5xl lg:text-6xl">
+          We&rsquo;d Love to Have You
+        </h1>
+        <p class="mx-auto mt-5 max-w-2xl text-base leading-8 text-[#f7f0e3]/85 sm:text-lg">
+          Reservations, private dining, and catering inquiries welcome
+        </p>
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================================================================ -->
+  <!-- CONTACT DETAILS SECTION: Key restaurant information at a glance             -->
+  <!-- Features: Address, phone, email, and hours in elegant cards                 -->
+  <!-- Mobile Padding: Cards stack with comfortable spacing on small screens       -->
+  <!-- ============================================================================ -->
+  <section data-section="contact-info" class="mx-auto max-w-7xl px-4 pb-8 sm:px-6 md:px-8 lg:px-12">
+    <div class="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+      <div class="gold-glow rounded-2xl border border-white/10 bg-[#10261f] p-6">
+        <p class="text-sm uppercase tracking-[0.25em] text-[#d4af37]">Address</p>
+        <p class="mt-3 text-lg text-[#fff7e8]">411 Congress Street</p>
+        <p class="text-[#f7f0e3]/80">Savannah, GA 31401</p>
+      </div>
+      <div class="gold-glow rounded-2xl border border-white/10 bg-[#10261f] p-6">
+        <p class="text-sm uppercase tracking-[0.25em] text-[#d4af37]">Phone</p>
+        <a href="tel:+19125550347" class="mt-3 block text-lg text-[#fff7e8] transition hover:text-[#d4af37]">
+          (912) 555-0347
+        </a>
+      </div>
+      <div class="gold-glow rounded-2xl border border-white/10 bg-[#10261f] p-6">
+        <p class="text-sm uppercase tracking-[0.25em] text-[#d4af37]">Email</p>
+        <a href="mailto:reservations@ryanssavannah.com" class="mt-3 block text-lg text-[#fff7e8] transition hover:text-[#d4af37]">
+          reservations@ryanssavannah.com
+        </a>
+      </div>
+      <div class="gold-glow rounded-2xl border border-white/10 bg-[#10261f] p-6">
+        <p class="text-sm uppercase tracking-[0.25em] text-[#d4af37]">Hours</p>
+        <p class="mt-3 text-[#fff7e8]">Mon-Thu 5-10pm</p>
+        <p class="text-[#fff7e8]">Fri-Sat 5-11pm</p>
+        <p class="text-[#fff7e8]">Sun Brunch 11am-9pm</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================================ -->
+  <!-- MAIN CONTACT SECTION: Reservation and inquiry form                           -->
+  <!-- Features: AJAX submission, required email, warm success state                -->
+  <!-- Mobile Padding: Full-width form fields with safe spacing on mobile          -->
+  <!-- ============================================================================ -->
+  <section data-section="contact-form" class="mx-auto max-w-7xl px-4 py-10 sm:px-6 md:px-8 lg:px-12 lg:py-14">
+    <div class="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
+      <div class="gold-glow rounded-3xl border border-white/10 bg-[#f7f0e3] p-6 text-[#1c2a22] sm:p-8">
+        <p class="text-sm uppercase tracking-[0.3em] text-[#8a6a1f]">Send a Message</p>
+        <h2 class="mt-3 text-3xl font-semibold text-[#10261f]">Plan Your Next Visit</h2>
+        <p class="mt-3 max-w-2xl leading-7 text-[#33443c]">
+          Whether you are reserving an intimate dinner, hosting a celebration, or arranging a catered gathering,
+          our team will respond promptly with thoughtful Southern hospitality.
+        </p>
+
+        <form id="contactForm" class="mt-8 space-y-5">
+          <div class="grid gap-5 md:grid-cols-2">
+            <div>
+              <label for="full_name" class="mb-2 block text-sm font-semibold text-[#10261f]">Full Name</label>
+              <input id="full_name" name="full_name" type="text" required class="w-full rounded-xl border border-[#cdbf9d] bg-white px-4 py-3 text-[#10261f] outline-none transition focus:border-[#8a6a1f] focus:ring-2 focus:ring-[#d4af37]/30">
+            </div>
+            <div>
+              <label for="email" class="mb-2 block text-sm font-semibold text-[#10261f]">Email</label>
+              <input id="email" name="email" type="email" required class="w-full rounded-xl border border-[#cdbf9d] bg-white px-4 py-3 text-[#10261f] outline-none transition focus:border-[#8a6a1f] focus:ring-2 focus:ring-[#d4af37]/30">
+            </div>
+          </div>
+
+          <div class="grid gap-5 md:grid-cols-2">
+            <div>
+              <label for="phone" class="mb-2 block text-sm font-semibold text-[#10261f]">Phone</label>
+              <input id="phone" name="phone" type="tel" class="w-full rounded-xl border border-[#cdbf9d] bg-white px-4 py-3 text-[#10261f] outline-none transition focus:border-[#8a6a1f] focus:ring-2 focus:ring-[#d4af37]/30">
+            </div>
+            <div>
+              <label for="inquiry_type" class="mb-2 block text-sm font-semibold text-[#10261f]">Inquiry Type</label>
+              <select id="inquiry_type" name="inquiry_type" class="w-full rounded-xl border border-[#cdbf9d] bg-white px-4 py-3 text-[#10261f] outline-none transition focus:border-[#8a6a1f] focus:ring-2 focus:ring-[#d4af37]/30">
+                <option>Reservation</option>
+                <option>Private Dining/Event</option>
+                <option>Catering</option>
+                <option>General Question</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid gap-5 md:grid-cols-2">
+            <div>
+              <label for="party_size" class="mb-2 block text-sm font-semibold text-[#10261f]">Party Size</label>
+              <input id="party_size" name="party_size" type="number" min="1" placeholder="Optional for non-reservations" class="w-full rounded-xl border border-[#cdbf9d] bg-white px-4 py-3 text-[#10261f] outline-none transition focus:border-[#8a6a1f] focus:ring-2 focus:ring-[#d4af37]/30">
+            </div>
+            <div>
+              <label for="preferred_datetime" class="mb-2 block text-sm font-semibold text-[#10261f]">Preferred Date / Time</label>
+              <input id="preferred_datetime" name="preferred_datetime" type="text" placeholder="e.g. Friday, May 16 at 7:00 PM" class="w-full rounded-xl border border-[#cdbf9d] bg-white px-4 py-3 text-[#10261f] outline-none transition focus:border-[#8a6a1f] focus:ring-2 focus:ring-[#d4af37]/30">
+            </div>
+          </div>
+
+          <div>
+            <label for="message" class="mb-2 block text-sm font-semibold text-[#10261f]">Message</label>
+            <textarea id="message" name="message" rows="6" required class="w-full rounded-2xl border border-[#cdbf9d] bg-white px-4 py-3 text-[#10261f] outline-none transition focus:border-[#8a6a1f] focus:ring-2 focus:ring-[#d4af37]/30"></textarea>
+          </div>
+
+          <button id="submitBtn" type="submit" class="cta-primary inline-flex items-center justify-center rounded-full bg-[#10261f] px-7 py-3 text-sm font-semibold tracking-wide text-[#f7f0e3] transition hover:bg-[#0b1c17] focus:outline-none focus:ring-2 focus:ring-[#d4af37]/40">
+            Send Inquiry
+          </button>
+
+          <p id="formStatus" class="form-message hidden rounded-2xl border border-[#d4af37]/30 bg-[#f6e7bf] px-4 py-3 text-[#4a3a12]"></p>
+        </form>
+      </div>
+
+      <!-- ============================================================================ -->
+      <!-- PRIVATE DINING CALLOUT: Elevated side panel for special events             -->
+      <!-- Features: Strong visual contrast, premium positioning, contact guidance   -->
+      <!-- Mobile Padding: Stacks cleanly beneath form on smaller screens             -->
+      <!-- ============================================================================ -->
+      <aside class="gold-glow rounded-3xl border border-white/10 bg-[#081625] p-6 sm:p-8">
+        <p class="text-sm uppercase tracking-[0.3em] text-[#d4af37]">Private Dining</p>
+        <h2 class="mt-3 text-3xl font-semibold text-[#fff7e8]">Celebrate with Southern Grace</h2>
+        <p class="mt-4 leading-7 text-[#f7f0e3]/82">
+          From rehearsal dinners to corporate gatherings, Ryan&rsquo;s Restaurant offers refined private dining spaces,
+          customized menus, and attentive service designed to make your event unforgettable.
+        </p>
+        <div class="mt-6 space-y-4 rounded-2xl border border-white/10 bg-white/5 p-5">
+          <p class="text-sm uppercase tracking-[0.25em] text-[#d4af37]">Best for</p>
+          <ul class="space-y-2 text-[#f7f0e3]/90">
+            <li>• Intimate celebrations</li>
+            <li>• Cocktail receptions</li>
+            <li>• Business dinners</li>
+            <li>• Catering consultations</li>
+          </ul>
+        </div>
+        <a href="mailto:reservations@ryanssavannah.com" class="mt-6 inline-flex rounded-full border border-[#d4af37]/40 px-5 py-3 text-sm font-semibold text-[#f7f0e3] transition hover:bg-[#d4af37] hover:text-[#081625]">
+          Inquire About Private Dining
+        </a>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============================================================================ -->
+  <!-- FOOTER SECTION: Matching brand treatment with navigation and contact info   -->
+  <!-- Features: Consistent colors, concise links, polished end-of-page finish     -->
+  <!-- Mobile Padding: Comfortable spacing with accessible tap targets            -->
+  <!-- ============================================================================ -->
+  <footer data-section="footer" class="border-t border-white/10 bg-[#07121d]">
+    <div class="mx-auto max-w-7xl px-4 py-10 sm:px-6 md:px-8 lg:px-12">
+      <div class="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
+        <div>
+          <p class="text-lg font-semibold text-[#f6e7bf]">Ryan&rsquo;s Restaurant</p>
+          <p class="mt-2 text-sm text-[#f7f0e3]/75">Southern fine dining in the heart of Savannah.</p>
+        </div>
+        <div class="flex flex-wrap gap-4 text-sm text-[#f7f0e3]/85">
+          <a href="/" class="transition hover:text-[#d4af37]">Home</a>
+          <a href="/menu" class="transition hover:text-[#d4af37]">Menu</a>
+          <a href="/about" class="transition hover:text-[#d4af37]">About</a>
+          <a href="/contact" class="text-[#d4af37]">Contact</a>
+        </div>
+      </div>
+      <p class="mt-8 text-sm text-[#f7f0e3]/55">© 2025 Ryan's Restaurant. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    /* ===== CONTACT FORM SUBMISSION HANDLER ===== */
+    /* Function: handleContactSubmit(e)
+       Purpose: Submit the contact form via fetch() to the webhook, then display a warm thank-you message.
+       Behavior: Disables submit button during request, sends all fields as JSON, and handles success/error states. */
+    const contactForm = document.getElementById('contactForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const formStatus = document.getElementById('formStatus');
+
+    function handleContactSubmit(e) {
+      e.preventDefault();
+
+      const formData = new FormData(contactForm);
+      const emailValue = (formData.get('email') || '').toString().trim();
+      const nameValue = (formData.get('full_name') || '').toString().trim();
+      const phoneValue = (formData.get('phone') || '').toString().trim();
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Sending...';
+      formStatus.classList.add('hidden');
+      formStatus.textContent = '';
+
+      const payload = {
+        contactEmail: emailValue,
+        contactName: nameValue,
+        contactPhone: phoneValue || undefined,
+        data: {
+          inquiry_type: formData.get('inquiry_type') || '',
+          party_size: formData.get('party_size') || '',
+          preferred_datetime: formData.get('preferred_datetime') || '',
+          message: formData.get('message') || ''
+        }
+      };
+
+      fetch('https://paymegpt.com/api/webhooks/flow/2711/30c026e96c39537531cd292c8c58fb503c938dfe2a9eced07e1806137be28e86', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      })
+      .then(function(r) { return r.json(); })
+      .then(function() {
+        contactForm.reset();
+        contactForm.style.display = 'none';
+        formStatus.className = 'form-message block rounded-2xl border border-[#8a6a1f]/25 bg-[#f6e7bf] px-5 py-4 text-[#4a3a12]';
+        formStatus.textContent = 'Thank you! We&rsquo;ll be in touch shortly.';
+        formStatus.classList.remove('hidden');
+      })
+      .catch(function() {
+        formStatus.className = 'form-message block rounded-2xl border border-red-300 bg-red-50 px-5 py-4 text-red-800';
+        formStatus.textContent = 'Sorry, something went wrong. Please try again or call us at (912) 555-0347.';
+        formStatus.classList.remove('hidden');
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Send Inquiry';
+      });
+    }
+
+    contactForm.addEventListener('submit', handleContactSubmit);
+  </script>
+</body>
+</html>
